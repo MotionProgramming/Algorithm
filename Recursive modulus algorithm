@@ -2,7 +2,7 @@
 
 //author : Md Abdullah Rajeb (MotionProgramming)
 //Email  : mdabdullahrajeb90@gmail.com
-// how to optimize the factorial alforithom using recarsunn
+// how to optimize the factorial alforithom using Recursive
 #include <bits/stdc++.h>
 using namespace std;
  
