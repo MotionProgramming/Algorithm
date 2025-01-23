@@ -1,0 +1,33 @@
+// Fibonacci series with memoization and time complexity analysis using dynamic programming
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define end1 '\n'
+#define mem(a, b) memset(a, b, sizeof(a))
+#define optimize() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+typedef long long ll;
+
+const int MOD = 1e9 + 7;
+ll dp[100123];
+
+ll fib(ll n) {
+    if (n == 0 || n == 1) return n;
+
+    if (dp[n] != -1) return dp[n];
+
+    return dp[n] = (fib(n - 1) + fib(n - 2)) % MOD;
+}
+
+void solve() {
+    ll n;
+    cin >> n;
+    mem(dp, -1); 
+    cout << fib(n) << endl;
+}
+
+int main() {
+    optimize();
+    solve();
+    return 0;
+}
