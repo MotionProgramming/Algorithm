@@ -41,7 +41,7 @@ Time Complexity of solve():
 */
 
 // Sieve of Eratosthenes algorithm to find primes up to n
-void sieve() {
+void sieve1() {
     int n;
     cin >> n; 
 
@@ -73,8 +73,39 @@ Time Complexity of sieve():
 - Overall time complexity of the Sieve of Eratosthenes is O(n log log n).
 */
 
+void Sieve2(){
+    int n;
+    cin>>n;
+    
+    vector<bool>p(n+1,true);
+    
+    p[0] = p[1] = false;
+    
+    for(int i = 2;i<=sqrt(n);i++){
+        if(p[i] == true){
+            for(int j = i*i; j<=n;j+=i){
+                p[j] = false;
+            }
+        }
+    }
+    
+    
+    vector<int>prime;
+    
+    for(int v = 2;v<=n;v++){
+       if(p[v] == true){
+           prime.push_back(v);
+       }
+    }
+    
+    cout<< prime.front() <<" "<<prime.back()<<endl;// smallest and lowest prime number
+    
+    for(auto u: prime)cout<<u<<" ";//print all prime number
+}
+
 int main() {
     solve();  
-    sieve();  
+    sieve1(); 
+    sieve2();
    return 0 
 }
