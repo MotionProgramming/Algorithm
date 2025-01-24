@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// Define the structure for a node in the linked list
+struct Node {
+    int data;         // Stores the value of the node
+    struct Node* next; // Pointer to the next node
+};
+
+// Global head pointer for the linked list
+struct Node* head = NULL;
+
+// Function to insert a new node at the beginning of the linked list
+void insert(int x) {
+    struct Node* newNode = new Node(); // Create a new node
+    newNode->data = x;                  // Assign the value to the node
+    newNode->next = head;               // Point the new node to the current head
+    head = newNode;                     // Update the head to the new node
+}
+
+// Function to display the linked list in order
+void display() {
+    Node* temp = head; // Start from the head
+    while (temp != NULL) { // Traverse until the end of the list
+        cout << temp->data << " "; // Print the data of the current node
+        temp = temp->next;         // Move to the next node
+    }
+    cout << endl;  // Newline after displaying all nodes
+}
+
+// Function to display the linked list in reverse order using recursion
+void revdisplay(Node* temp) {
+    if (temp == NULL) return;  // Base case: stop if the node is NULL
+    revdisplay(temp->next);    // Recursive call to the next node
+    cout << temp->data << " "; // Print the data after returning
+}
+
+// Function to free the allocated memory for the linked list
+void cleanup() {
+    Node* temp;  // Temporary pointer to store nodes
+    while (head != NULL) {  // Traverse through the list
+        temp = head;         // Store the current head
+        head = head->next;   // Move the head to the next node
+        delete temp;         // Delete the current node
+    }
+}
+
+// Main function
+int main() {
+    int n; // Number of nodes to insert
+    cin >> n; // Read the number of elements
+    
+    // Loop to insert elements
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x; // Read the value for the node
+        insert(x); // Insert into the linked list
+    }
+
+    display(); // Display the list in order
+    revdisplay(head); // Display the list in reverse order
+    cout << endl; // Newline after reverse display
+    cleanup(); // Free the allocated memory
+    return 0; // Exit the program
+}
