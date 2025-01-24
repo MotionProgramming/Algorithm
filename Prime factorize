@@ -1,0 +1,57 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define optimize() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+#define MAX 1000000
+
+int Fp[MAX]; 
+
+void Sieve() {
+    for (int i = 2; i < MAX; i++) {
+        Fp[i] = i; 
+    }
+
+    for (int t = 2; t * t < MAX; t++) {
+        if (Fp[t] == t) {  // If t is prime
+            for (int j = t * t; j < MAX; j += t) {
+                if (Fp[j] == j) {  // If j has not been updated
+                    Fp[j] = t;  // Mark the smallest prime factor for j
+                }
+            }
+        }
+    }
+}
+
+// Function to factorize the number n using the smallest prime factor
+void factorize(int n) {
+   
+
+    vector<int> primes;
+
+    while (n > 1) {
+        primes.push_back(Fp[n]);  // Add the smallest prime factor
+        n /= Fp[n];  // Divide n by its smallest prime factor
+    }
+
+    // Print the prime factors
+    for (int prime : primes) {
+        cout << prime << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    optimize();  
+    Sieve();  // Precompute the smallest prime factors
+
+    int n;
+    cout << "Enter a number to factorize: ";
+    cin >> n;
+
+    cout << "\nPrime factorization of " << n << ": ";
+    factorize(n);  // Factorize and print the prime factors
+
+    return 0;
+}
