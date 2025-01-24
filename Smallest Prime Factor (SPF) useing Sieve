@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MAX 1000000
+
+vector<int> Fp(MAX); 
+
+void Sieve() {
+    int n;
+    cin >> n;  // Input for the upper limit for which smallest prime factors should be printed
+
+    
+    for (int i = 2; i < MAX; i++) {
+        Fp[i] = i; // Assume each number is its own smallest prime factor
+    }
+
+    // 0 and 1 are not prime
+    Fp[0] = Fp[1] = 0;
+
+    // Sieve of Eratosthenes to find the smallest prime factor for each number
+    for (int i = 2; i * i < MAX; i++) {
+        if (Fp[i] == i) {  // If i is a prime number
+            for (int j = i * i; j < MAX; j += i) {
+                if (Fp[j] == j) {  // If j has not been updated yet
+                    Fp[j] = i;  // Set the smallest prime factor for j
+                }
+            }
+        }
+    }
+
+    for (int l = 1; l <= n; l++) {
+        cout << "Smallest prime factor of " << l << " is " << Fp[l] << endl;
+    }
+}
+
+int main() {
+    Sieve(); 
+    return 0;
+}
