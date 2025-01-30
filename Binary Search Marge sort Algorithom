@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll; 
+
+ll n; 
+vector<ll> v, temp; 
+
+void marge(ll l, ll r) { 
+    ll mid = (l + r) / 2; 
+    
+    ll i1 = l, i2 = mid + 1, k = l; // Initialize pointers: i1 for the left half, i2 for the right half, k for the temp array
+    
+    // Merge the two halves into the temp array in sorted order
+    while (i1 <= mid && i2 <= r) {
+        temp[k++] = (v[i1] < v[i2]) ? v[i1++] : v[i2++]; // Compare elements and copy the smaller one to temp
+    }
+    
+    while (i1 <= mid) {
+        temp[k++] = v[i1++];
+    }
+    
+    while (i2 <= r) {
+        temp[k++] = v[i2++];
+    }
+    
+    // Copy the merged elements 
+    for (ll x = l; x <= r; x++) {
+        v[x] = temp[x];
+    }
+}
+
+void margesort(ll l, ll r) { 
+    if (l >= r) return; // Base case: if the range has 1 or 0 elements, it's already sorted
+    
+    ll mid = (l + r) / 2; 
+    
+    margesort(l, mid); // Recursively sort the left half
+    margesort(mid + 1, r); // Recursively sort the right half
+    
+    marge(l, r); // Merge the two sorted halves
+}
+
+int main() {
+    cin >> n; 
+    
+    v.resize(n); 
+    temp.resize(n); 
+    
+    for (ll i = 0; i < n; i++) {
+        cin >> v[i]; 
+    }
+    
+    margesort(0, n - 1); // Call the merge sort function
+    
+    for (auto u : v) {
+        cout << u << " "; // Print the sorted array
+    }
+    cout << endl; 
+    
+    return 0; 
+}
