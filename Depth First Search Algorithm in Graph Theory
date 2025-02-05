@@ -1,77 +1,76 @@
-
-// altime better recursive way Depth First Searach
-
 #include <bits/stdc++.h>  
 using namespace std;  
 
 typedef vector<int> vi;  
-map<int, vi> adj; // Adjacency list  
-map<int, bool> visited; // To track visited nodes  
+map<int, vi> adj; // Adjacency list (graph representation)
+map<int, bool> visited; 
 
 #define PB push_back  
 #define endl '\n'  
 #define optimize() ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);  
 
-// Add undirected edge  
 void edge(int u, int v) {  
-    adj[u].PB(v); // Add v to u's adjacency list  
-    adj[v].PB(u); // Add u to v's adjacency list  
+    adj[u].PB(v); 
+    adj[v].PB(u); 
 }  
 
-// Iterative DFS using stack  
-void DFS(int start) {  
-    stack<int> s;  
-    s.push(start); // Push start node  
-    visited[start] = true; // Mark as visited  
-    
-    while (!s.empty()) {  
-        cout << s.top() << " "; // Print top node  
-        for (auto x : adj[s.top()]) { // Explore neighbors  
-            if (!visited[x]) {  
-                visited[x] = true; // Mark neighbor as visited  
-                s.push(x); // Push neighbor to stack  
-            }  
-        }  
-        s.pop(); // Remove processed node  
-    }  
-}  
+// Recursive DFS function 
+void DFS(int start) { 
+    visited[start] = true;  // Mark the node as visited
+    cout << start << " "; // Print the current node
 
-
-
-// Recursive DFS function
-void DFS(int start) {
-    visited[start] = true; // Mark the current node as visited
-    cout << start << " ";  // Print the current node
-    
-    // Recur for all the vertices adjacent to this vertex
-    for (auto x : adj[start]) { 
-        if (!visited[x]) {  // If the adjacent node has not been visited
-            DFS(x);  // Recur with the adjacent node
-        }
-    }
+    for (auto x : adj[start]) {  // Loop through all neighbors of the current node
+        if (!visited[x]) {  // If the neighbor has not been visited
+            DFS(x);  // Recurse with the unvisited neighbor
+        } 
+    } 
 }
+void DFS(int start) { 
+    stack<int> s; 
+    // Create a stack to store nodes to visit.
+    s.push(start); 
+    // Push the start node onto the stack.
+    visited[start] = true; 
+    // Mark the start node as visited.
 
-
-// Input and DFS execution  
+    while (!s.empty()) { 
+        int temp = s.top(); 
+        // Get the top node from the stack.
+        cout << temp << " "; 
+        // Print the current node.
+        s.pop(); 
+        // Remove the node from the stack.
+        
+        for (auto x : adj[temp]) { 
+            // Iterate through adjacent nodes of the current node.
+            if (!visited[x]) { 
+                // If the neighbor isn't visited yet,
+                visited[x] = true; 
+                // Mark it as visited.
+                s.push(x); 
+                // Push the neighbor onto the stack.
+            } 
+        } 
+    } 
+}
 void solve() {  
     int n, u, v, start;  
-    cin >> n; 
+    cin >> n;  
     cout << "Enter the number of edges: " << n << endl;  
     
     for (int i = 0; i < n; i++) {  
         cin >> u >> v;  
-        edge(u, v); // Add each edge  
+        edge(u, v);  
     }  
     
-    cin >> start; // Read starting node  
+    cin >> start;  
     cout << "DFS starting from node " << start << ": ";  
     DFS(start);  
-    cout << endl;  
+    cout << endl; 
 }  
 
-// Main function  
 int main() {  
-    optimize(); 
-    solve(); 
+    optimize();  
+    solve();  
     return 0;  
 }  
