@@ -14,21 +14,24 @@ void edge(int u, int v) {
     adj[v].PB(u); // Add edge v->u (undirected)
 }
 
-void BFS(int start) {
-    queue<int> q; // Queue for BFS
-    q.push(start); // Push starting node
-    visited[start] = true; // Mark start as visited
-    
-    while (!q.empty()) { 
-        cout << q.front() << " "; // Print node
-        for (auto s : adj[q.front()]) { 
-            if (!visited[s]) { // If not visited
-                visited[s] = true; // Mark as visited
-                q.push(s); // Push to queue
-            }
-        }
-        q.pop(); // Remove processed node
-    }
+void BFS(int start) { 
+   queue<int>s ;
+   s.push(start);
+   
+   visited[start] = true;
+   
+   while(!s.empty()){
+       int temp = s.front();
+       cout<<temp<<" ";
+       s.pop();
+       for(auto R : adj[temp]){
+           if(!visited[R]){
+               visited[R] = true;
+               s.push(R);
+           }
+       }
+       
+   }
 }
 
 void solve() {
