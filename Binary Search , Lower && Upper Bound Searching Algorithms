@@ -1,0 +1,90 @@
+/*
+  Important formula :
+1. Number of values smaller than  x (lower bound)
+   ( x )-এর চেয়ে ছোট মানের সংখ্যা (লাওয়ার বাউন্ড)
+   lowerbound = v[mid] >=x
+
+2. Number of values less than or equal to ( x ) (upper bound)
+   ( x )এর চেয়ে ছোট বা সমান মানের সংখ্যা or  (আপার বাউন্ড)
+   upper bound = v[mid]>x
+
+3. Number of values greater or equal to ( x ) (n - lower bound)
+   ( x )-এর চেয়ে বড় বা সমান মানের সংখ্যা (n - লাওয়ার বাউন্ড)
+
+4. Number of values greater than ( x ) (n - upper bound) 
+   ( x )-এর চেয়ে বড় মানের সংখ্যা (n - আপার বাউন্ড)
+
+*/
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int n, q;
+vector<int> v;
+
+int Lower_binary_search(int l, int r, int x) {
+    int ans = n;  // Default to n, meaning not found
+    while (l <= r) {
+        int mid = (l + r) / 2;
+        if (v[mid] >= x) {
+            ans = mid;
+            r = mid - 1;  
+        } else {
+            l = mid + 1;
+        }
+    }
+    return ans; 
+}
+
+int upper_binary_search(int l, int r, int x) {
+    int ans = n;  // Default to n, meaning not found
+    while (l <= r) {
+        int mid = (l + r) / 2;
+        if (v[mid] > x) {
+            ans = mid;
+            r = mid - 1;  
+        } else {
+            l = mid + 1;
+        }
+    }
+    return ans; 
+}
+
+int binarSearch(int l, int r, int x) {
+    int ans = -1;  // Default to -1, meaning not found
+    while (l <= r) {
+        int mid = (l + r) / 2;
+        if (v[mid] == x) {
+            return mid;  
+        } else if (v[mid] < x) {
+            l = mid + 1;
+        } else {
+            r = mid - 1;
+        }
+    }
+    return ans;  // Return -1 if not found
+}
+
+int main() {
+    cin >> n >> q;
+    
+    v.resize(n);
+    for (int i = 0; i < n; i++) cin >> v[i];
+
+    while (q--) {
+        int x;
+        cin >> x;  
+        
+        int lower = Lower_binary_search(0, n - 1, x);
+        int upper = upper_binary_search(0, n - 1, x);
+        int binarryResult = binarSearch(0, n - 1, x);
+
+        cout << "Lower bound index for " << x << ": " << lower << endl;
+        cout << "Upper bound index for " << x << ": " << upper << endl;
+
+       cout<< "binarry Search index for " << x << ": "<< binarryResult<< endl;
+    }
+
+    return 0;
+}
